@@ -1,0 +1,23 @@
+# Publishes docker image, pinning actions to a commit SHA,
+# and updating most recently built image with the latest tag.
+# Can be triggered by either pushing a commit that changes the `Dockerfile`,
+# or manually dispatching the workflow.
+
+name: Run a bash command 
+#the actual name that would show up in the automation process
+
+on:
+  workflow_dispatch: #trigger the workflow in github manually
+  push:
+    paths:
+      - 'Dockerfile'
+      - .github/workflows/bash.yml # or whatever you named the file
+      - 'conda-linux-64.lock'
+
+jobs:
+  run_bash_command: #title for this particular job for computer
+    name: Run A Bash Command Using GitHub Actions #title for this job for human to read
+    runs-on: ubuntu-latest #run it on ubuntu machine
+    steps: #actual steps will be run when the job is triggered.
+      - name: Check out the repo #clone the repo and cd to the repo.
+        uses: actions/checkout@v4 #
